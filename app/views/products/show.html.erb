@@ -1,0 +1,23 @@
+<%= image_tag('http://store.storeimages.cdn-apple.com/4973/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6/silver/iphone6-silver-select-2014_GEO_US?wid=470&hei=556&fmt=png-alpha&qlt=95&.v=cdYkN0',:width => 100, :height => 100, :border => 0, :alt => '', :title => '') %><br/>
+  <%= @product.name %><br/>
+  <%= @product.product_details %><br/>
+  <%= @product.price %><br/>
+  <%= link_to "add to cart",nil,class: "cart_click" %>
+  <script type="text/javascript">
+  var cart_id = <%= current_user.cart.id %>;
+  var pro_id = <%= @product.id %>;
+  $('.cart_click').click(function() {
+  	alert(1);
+  $.ajax({
+        url: "/cart/add_to_cart",
+        type: "POST",
+        data: {id: cart_id, product_id: pro_id},
+        success: function(response){
+          // var b = response;
+          console.log(response);
+          $(".cart").html(response)
+          // $('.care-plan-practitioner-list').html(b);
+        }
+      });
+});
+  </script>

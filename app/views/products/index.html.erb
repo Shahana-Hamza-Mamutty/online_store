@@ -1,0 +1,28 @@
+<div id="tabs">
+  <ul>
+  <% n = 1 %>
+  <% m = 1 %>
+  <% @categories.each do |category| %>
+    <li><a href="#tabs-<%= n %>"><%= category.name %></a></li>
+    <% n = n + 1 %>
+  <% end %>
+  </ul>
+  <% @categories.each do |category| %>
+  
+  <div id="tabs-<%= m %>">
+  <% category.products.each do |product| %>
+  <%= link_to image_tag('http://store.storeimages.cdn-apple.com/4973/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6/silver/iphone6-silver-select-2014_GEO_US?wid=470&hei=556&fmt=png-alpha&qlt=95&.v=cdYkN0',:width => 100, :height => 100, :border => 0, :alt => '', :title => ''), product_path(:id => product) %><br/>
+  <%= product.name %><br/>
+  <%= product.product_details.html_safe %><br/>
+  <%= product.price %><br/>
+  <% end%>
+  </div>
+    <% m = m + 1 %>
+  <% end %>
+  
+</div>
+   <script>
+  $( function() {
+    $( "#tabs" ).tabs();
+  } );
+  </script>
