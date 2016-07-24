@@ -36,4 +36,15 @@ namespace :data_products do
   	Product.where(name: "Product 20").first_or_create!(category_id: d.id, product_details: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", price: 1000)
   end
 
+  desc "create roles"
+  task :add_role => :environment do
+    Role.create(:name => "customer")
+    Role.create(:name => "admin")
+  end
+
+  desc "create admin"
+  task :admin => :environment do
+    User.create(:email => "shahanamamutty@gmail.com", :password => "shahana7")
+  end
+
 end

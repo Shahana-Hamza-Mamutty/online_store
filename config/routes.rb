@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'carts/show'
 
-  devise_for :users
+  # devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :carts
 
   post 'cart/add_to_cart' => 'carts#add_to_cart'
+  devise_for :users, :controllers => { :registrations => 'users/registrations' }
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

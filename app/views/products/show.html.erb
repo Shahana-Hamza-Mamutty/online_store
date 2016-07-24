@@ -4,20 +4,30 @@
   <%= @product.price %><br/>
   <a href="#" class="cart_click">add to cart</a>
   <script type="text/javascript">
-  var cart_id = <%= current_user.cart.id %>;
+  
   var pro_id = <%= @product.id %>;
-  $('.cart_click').click(function() {
-  	alert(1);
-  $.ajax({
-        url: "/cart/add_to_cart",
-        type: "POST",
-        data: {id: cart_id, product_id: pro_id},
-        success: function(response){
-          // var b = response;
-          console.log(response);
-          $(".cart").html(response)
-          // $('.care-plan-practitioner-list').html(b);
-        }
-      });
-});
+  var usr = "<%= current_user %>";
+  <% unless current_user.present? %>
+    $('.cart_click').click(function() {
+        alert("please login");
+
+        });
+  <% else %>
+  var cart_id = <%= current_user.cart.id %>;
+      $('.cart_click').click(function() {        
+          $.ajax({
+          url: "/cart/add_to_cart",
+          type: "POST",
+          data: {id: cart_id, product_id: pro_id},
+          success: function(response){
+            // var b = response;
+            console.log(response);
+            $(".cart").html(response)
+            // $('.care-plan-practitioner-list').html(b);
+          }
+        });
+          });
+  <% end %>
+
+
   </script>
