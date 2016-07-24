@@ -2,7 +2,7 @@
   <%= @product.name %><br/>
   <%= @product.product_details %><br/>
   <%= @product.price %><br/>
-  <%= link_to "add to cart",nil,class: "cart_click" %>
+  <a href="#" class="cart_click">add to cart</a>
   <script type="text/javascript">
   var cart_id = <%= current_user.cart.id %>;
   var pro_id = <%= @product.id %>;

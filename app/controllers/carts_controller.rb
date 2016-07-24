@@ -1,15 +1,13 @@
 class CartsController < ApplicationController
   def show
+    @cart = Cart.find params[:id]
+    @products = @cart.products
   end
 
   def add_to_cart
-  	p "ffffffffffffffffffffffffff"
-  	p params[:user_id]
   	cart = Cart.find params[:id]
   	product = Product.find params[:product_id]
   	cart_product = CartProduct.where('cart_id = ? and product_id = ?', cart.id, product.id ).first
-  	p "ffffffffffffffffffffffffff"
-  	p cart_product
   	if cart_product.present?
   		quant = cart_product.quantity + 1
   		price = quant * product.price

@@ -1,2 +1,7 @@
-<h1>Carts#show</h1>
-<p>Find me in app/views/carts/show.html.erb</p>
+<% @products.each do |product| %>
+	<%= image_tag('http://store.storeimages.cdn-apple.com/4973/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6/silver/iphone6-silver-select-2014_GEO_US?wid=470&hei=556&fmt=png-alpha&qlt=95&.v=cdYkN0',:width => 100, :height => 100, :border => 0, :alt => '', :title => '') %><br/>
+  <%= product.name %><br/>
+  <%= product.product_details %><br/>
+  <%= product.price %><br/>
+  <%= product.cart_products.where(cart_id: @cart.id).sum(:quantity)%>
+<% end %>
