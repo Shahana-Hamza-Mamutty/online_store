@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
   has_many :orders
   has_one :cart
   belongs_to :role
+
+  def has_payment_info?
+	  braintree_customer_id
+	end
 end

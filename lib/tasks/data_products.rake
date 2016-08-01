@@ -44,7 +44,9 @@ namespace :data_products do
 
   desc "create admin"
   task :admin => :environment do
-    User.create(:email => "shahanamamutty@gmail.com", :password => "shahana7")
+    user = User.where(:email => "shahanamamutty@gmail.com").first_or_create!(:password => "shahana7")
+    user.role_id = Role.find_by_name('admin').id
+    user.save
   end
 
 end

@@ -1,0 +1,11 @@
+<%= form_for @product do |f| %>
+<%= f.label :name %>:
+      <%= f.text_field :name %><br/>
+      <%= f.label :product_details %>:
+      <%= f.text_area :product_details%><br/>
+      <%= f.label :category %>:
+      <%= f.select :category_id, options_for_select(@cat, @product.category_id) %><br/>
+      <%= f.label :price %>:
+      <%= f.number_field :price, :class => 'text_field', :step => 'any'%><br/>
+      <%= f.submit "Edit" %>
+    <% end %>

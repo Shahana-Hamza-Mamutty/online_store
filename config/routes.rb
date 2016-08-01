@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   root 'products#index'
   resources :products
   resources :carts
+  resources :orders
 
   post 'cart/add_to_cart' => 'carts#add_to_cart'
+  post 'cart/edit_cart' => 'carts#edit_cart'
   devise_for :users, :controllers => { :registrations => 'users/registrations' }
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

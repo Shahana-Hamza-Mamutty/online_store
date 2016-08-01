@@ -2,22 +2,31 @@
 <html>
 <head>
   <title>OnlineStore</title>
+  
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <%= include_gon %>
   <meta charset="utf-8">
   <link href = "http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
   <script src = "http://code.jquery.com/jquery-1.10.2.js"></script>
   <script src = "http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
 </head>
 <body>
 <p class="notice"><%= notice %></p>
        <p class="alert"><%= alert %></p>
        <% if user_signed_in? %>
+       <% if current_user.role.name == "admin" %>
+         <%= link_to('Add a Product', new_product_path, :method => :get) %> 
+       <% end %>
   <li>
   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
   </li>
-  <div class="cart" ><%=link_to "cart(#{current_user.cart.cart_products.sum(:quantity)})", cart_path(current_user.cart)  %></div>
+  <% if current_user.role != "admin" %>
+         <div class="cart" ><%=link_to "cart(#{current_user.cart.cart_products.where('status != ?', "purchased").sum(:quantity)})", cart_path(current_user.cart)  %></div>
+       <% end %>
+  
 <% else %>
   <li>
   <%= link_to('Login', new_user_session_path)  %>  / <%= link_to('Register', new_user_registration_path)  %>

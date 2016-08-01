@@ -1,7 +1,58 @@
 <% @products.each do |product| %>
-	<%= image_tag('http://store.storeimages.cdn-apple.com/4973/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6/silver/iphone6-silver-select-2014_GEO_US?wid=470&hei=556&fmt=png-alpha&qlt=95&.v=cdYkN0',:width => 100, :height => 100, :border => 0, :alt => '', :title => '') %><br/>
-  <%= product.name %><br/>
-  <%= product.product_details %><br/>
-  <%= product.price %><br/>
-  <%= product.cart_products.where(cart_id: @cart.id).sum(:quantity)%>
+<%= render partial: 'product', locals: { product: product, cart: @cart} %> 
 <% end %>
+<h>total:<span class="price"><%= @total %></span></h>
+<%= link_to('Checkout', new_order_path, :method => :get) %>
+<!-- <button type='button' class="checkout">checkout</button><br/> -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		var cart_id = <%= current_user.cart.id %>;
+		$(document).on('click', '.edit_item', function() {
+			var data = $(this).attr('data-id');
+			$('.remove_item_'+data).show();
+			$('.save_item_'+data).show();
+			$('.cancel_changes_'+data).show();
+			$('.edit_item_'+data).hide();
+			$('.product_count_'+data).prop('disabled', false);
+		});
+
+		$(document).on('click', '.cancel_changes', function() {
+			var data = $(this).attr('data-id');
+			$('.cancel_changes_'+data).hide();
+			$('.remove_item_'+data).hide();
+			$('.save_item_'+data).hide();
+			$('.edit_item_'+data).show();
+			$('.product_count_'+data).prop('disabled', 'disabled');
+		});
+		$(document).on('click', '.save_item', function() {  
+			var data = $(this).attr('data-id');
+			var quant = $('.product_count_'+data).val();
+			cart_update(data, quant, "quantity");
+		});
+
+		$(document).on('click', '.remove_item', function() {  
+			var data = $(this).attr('data-id');
+			cart_update(data, null, "remove");
+		});
+
+		function cart_update(product_id , num, cond){
+			$.ajax({
+				url: "/cart/edit_cart",
+				type: "POST",
+				data: {id: cart_id, product_id: product_id, quantity: num, condition: cond},
+				success: function(response){
+					console.log(response);
+		            if (cond == "quantity"){
+		            	$(".sec_"+product_id).html(response['attachmentPartial']);
+		            }
+		            else{
+		            	$(".sec_"+product_id).remove();
+		            }
+		            $(".cart").html("cart("+response['cartCount']+")");
+		            $(".price").html(response['cartTotal']);
+		          }
+		        });
+		}
+	});
+
+</script>
