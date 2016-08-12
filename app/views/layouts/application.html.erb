@@ -14,35 +14,35 @@
   <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
 </head>
 <body>
-<p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-       <% if user_signed_in? %>
-       <% if current_user.role.name == "admin" %>
-         <%= link_to('Add a Product', new_product_path, :method => :get) %> 
-       <% end %>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  <% if user_signed_in? %>
+  <% if current_user.role.name == "admin" %>
+  <%= link_to('Add a Product', new_product_path, :method => :get) %> 
+  <% end %>
   <li>
-  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
+    <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
   </li>
   <% if current_user.role != "admin" %>
-         <div class="cart" ><%=link_to "cart(#{current_user.cart.cart_products.where('status != ?', "purchased").sum(:quantity)})", cart_path(current_user.cart)  %></div>
-       <% end %>
+  <div class="cart" ><%=link_to "cart(#{current_user.cart.cart_products.where('status != ?', "purchased").sum(:quantity)})", cart_path(current_user.cart)  %></div>
+  <% end %>
   
-<% else %>
+  <% else %>
   <li>
-  <%= link_to('Login', new_user_session_path)  %>  / <%= link_to('Register', new_user_registration_path)  %>
+    <%= link_to('Login', new_user_session_path)  %>  / <%= link_to('Register', new_user_registration_path)  %>
   </li>
-<% end %>
+  <% end %>
 
-<%= yield %>
+  <%= yield %>
 
 </body>
 </html>
 <script type="text/javascript">
   $.ajaxSetup({
-  headers: {
-    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
 </script>
 
 

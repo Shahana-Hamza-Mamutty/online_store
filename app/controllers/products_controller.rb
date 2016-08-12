@@ -32,9 +32,9 @@ class ProductsController < ApplicationController
 	end
 
 	def update
-		product = Product.find params[:id]
-		@product = product.update_attributes(name: params[:product][:name], product_details: params[:product][:product_details], category_id: params[:product][:category_id], price: params[:product][:price])
-		if @product
+		@product = Product.find params[:id]
+		product = @product.update_attributes(name: params[:product][:name], product_details: params[:product][:product_details], category_id: params[:product][:category_id], price: params[:product][:price])
+		if product
 			redirect_to products_path
 		else
 			product_path(:id => @product)
@@ -43,6 +43,15 @@ class ProductsController < ApplicationController
 
 	def show
 		@product = Product.find(params[:id])
+	end
+
+	def destroy
+		@product = Product.find params[:id]
+		if @product.destroy
+			redirect_to products_path
+		else
+			product_path(:id => @product)
+		end
 	end
 
 end

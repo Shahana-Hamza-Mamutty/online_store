@@ -6,4 +6,12 @@ class Product < ActiveRecord::Base
 
 	has_many :carts, :through => :cart_products
 	has_many :cart_products
+	
+	def price_name
+	  [name, price].join(' ')
+	end
+
+	def self.by_letter(letter)
+	  where("name LIKE ?", "#{letter}%").order(:name)
+	end
 end
