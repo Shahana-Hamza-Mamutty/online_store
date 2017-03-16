@@ -36,6 +36,7 @@ gem 'figaro', '~> 0.7.0'
 gem 'gon', '~> 5.1.2'
 
 gem 'devise'
+gem 'grape'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
